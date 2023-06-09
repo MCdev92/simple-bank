@@ -1,6 +1,4 @@
 version: "1"
-packages: []
-version: "1"
 packages:
   - name: "db"
     path: "./db/sqlc"
