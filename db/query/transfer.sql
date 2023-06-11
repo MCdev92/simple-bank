@@ -1,3 +1,4 @@
+-- add CRUD transfer 
 -- name: CreateTransfer :one
 INSERT INTO transfers (
   from_account_id,
