@@ -23,6 +23,7 @@ type CreateTransferParams struct {
 	Amount        int64 `json:"amount"`
 }
 
+// add CRUD transfer
 func (q *Queries) CreateTransfer(ctx context.Context, arg CreateTransferParams) (Transfer, error) {
 	row := q.db.QueryRowContext(ctx, createTransfer, arg.FromAccountID, arg.ToAccountID, arg.Amount)
 	var i Transfer

@@ -21,6 +21,7 @@ type CreateEntryParams struct {
 	Amount    int64 `json:"amount"`
 }
 
+// add CRUD entry
 func (q *Queries) CreateEntry(ctx context.Context, arg CreateEntryParams) (Entry, error) {
 	row := q.db.QueryRowContext(ctx, createEntry, arg.AccountID, arg.Amount)
 	var i Entry
