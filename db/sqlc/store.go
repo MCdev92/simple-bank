@@ -89,39 +89,10 @@ func (store *Store) TransferTX(ctx context.Context, arg TransferTxParams) (Trans
 		}
 
 		// get account -> update its balance
-		// if else statement added to fix potential ***DEADLOCK**
 		if arg.FromAccountID < arg.ToAccountID {
-			result.FromAccount, err = q.AddAccountBalance(ctx, AddAccountBalanceParams{
-				ID:     arg.FromAccountID,
-				Amount: -arg.Amount,
-			})
-			if err != nil {
-				return err
-			}
-
-			result.ToAccount, err = q.AddAccountBalance(ctx, AddAccountBalanceParams{
-				ID:     arg.ToAccountID,
-				Amount: arg.Amount,
-			})
-			if err != nil {
-				return err
-			}
+			result.FromAccount, result.ToAccount, err = addMoney(ctx, q, arg.FromAccountID, -arg.Amount, arg.ToAccountID, arg.Amount)
 		} else {
-			result.ToAccount, err = q.AddAccountBalance(ctx, AddAccountBalanceParams{
-				ID:     arg.ToAccountID,
-				Amount: arg.Amount,
-			})
-			if err != nil {
-				return err
-			}
-
-			result.FromAccount, err = q.AddAccountBalance(ctx, AddAccountBalanceParams{
-				ID:     arg.FromAccountID,
-				Amount: -arg.Amount,
-			})
-			if err != nil {
-				return err
-			}
+			result.ToAccount, result.FromAccount, err = addMoney(ctx, q, arg.ToAccountID, arg.Amount, arg.FromAccountID, -arg.Amount)
 		}
 
 		return nil
@@ -131,7 +102,7 @@ func (store *Store) TransferTX(ctx context.Context, arg TransferTxParams) (Trans
 
 }
 
-func addMOney(
+func addMoney(
 	ctx context.Context,
 	q *Queries,
 	accountID1 int64,
