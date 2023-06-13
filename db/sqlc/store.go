@@ -89,6 +89,7 @@ func (store *Store) TransferTX(ctx context.Context, arg TransferTxParams) (Trans
 		}
 
 		// get account -> update its balance
+		// there is a potential **DEADLOCK** in this transaction
 		result.FromAccount, err = q.AddAccountBalance(ctx, AddAccountBalanceParams{
 			ID:     arg.FromAccountID,
 			Amount: -arg.Amount,
