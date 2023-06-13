@@ -89,7 +89,8 @@ func TestTransferTx(t *testing.T) {
 		require.Equal(t, account2.ID, toAccount.ID)
 
 		// check accounts' balance
-		fmt.Println(">> txt:", fromAccount.Balance, toAccount.Balance)
+		fmt.Println(">> tx:", fromAccount.Balance, toAccount.Balance)
+
 		diff1 := account1.Balance - fromAccount.Balance
 		diff2 := toAccount.Balance - account2.Balance
 		require.Equal(t, diff1, diff2)
@@ -110,6 +111,7 @@ func TestTransferTx(t *testing.T) {
 	require.NoError(t, err)
 
 	fmt.Println(">> after:", updatedAccount1.Balance, updatedAccount2.Balance)
+
 	require.Equal(t, account1.Balance-int64(n)*amount, updatedAccount1.Balance)
 	require.Equal(t, account2.Balance+int64(n)*amount, updatedAccount2.Balance)
 }
