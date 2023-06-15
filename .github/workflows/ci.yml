@@ -10,7 +10,7 @@ jobs:
 
   test:
     name: Test
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     services:
       postgres:
@@ -40,8 +40,7 @@ jobs:
 
     - name: Install golang-migrate
       run: |
-        Curl -L https://github.com/golang-migrate/migrate/releases/download/v4.14.1/migrate.linux-amd64.tar.gz | tar xvz
-        sudo mv migrate.linux-amd64 /usr/bin/migrate
+        curl -L https://github.com/golang-migrate/migrate/releases/download/$version/migrate.$os-$arch.tar.gz | tar xvz
         which migrate
 
     - name: Run migrations
